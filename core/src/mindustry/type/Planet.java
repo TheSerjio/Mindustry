@@ -114,6 +114,8 @@ public class Planet extends UnlockableContent{
     public boolean prebuildBase = true;
     /** If true, waves are created on sector loss. TODO remove. */
     public boolean allowWaves = false;
+    /** If true, planet can be selected as preset in editor */
+    public boolean editorPreset = true;
     /** Icon as displayed in the planet selection dialog. This is a string, as drawables are null at load time. */
     public String icon = "planet";
     /** Default core block for launching. */

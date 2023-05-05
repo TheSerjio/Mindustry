@@ -1,5 +1,7 @@
 package mindustry.world.meta;
 
+import arc.Core;
+
 /** Environmental flags for different types of locations. */
 public class Env{
     public static final int
@@ -23,4 +25,27 @@ public class Env{
     any = 0xffffffff,
     //no attributes (0)
     none = 0;
+
+    public static final int[] singles = new int[]{terrestrial, space, underwater, spores, scorching, groundOil, groundWater, oxygen};
+
+    public static String localize(int env){
+        String result = "";
+        if((env | terrestrial) == env)
+            result += Core.bundle.get("env.terrestrial");
+        if((env | space) == env)
+            result += Core.bundle.get("env.space");
+        if((env | underwater) == env)
+            result += Core.bundle.get("env.underwater");
+        if((env | spores) == env)
+            result += Core.bundle.get("env.spores");
+        if((env | scorching) == env)
+            result += Core.bundle.get("env.scorching");
+        if((env | groundOil) == env)
+            result += Core.bundle.get("env.groundOil");
+        if((env | groundWater) == env)
+            result += Core.bundle.get("env.groundWater");
+        if((env | oxygen) == env)
+            result += Core.bundle.get("env.oxygen");
+        return result;
+    }
 }

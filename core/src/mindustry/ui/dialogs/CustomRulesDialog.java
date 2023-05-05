@@ -20,6 +20,7 @@ import mindustry.type.*;
 import mindustry.type.Weather.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.meta.*;
 
 import static arc.util.Time.*;
 import static mindustry.Vars.*;
@@ -240,6 +241,11 @@ public class CustomRulesDialog extends BaseDialog{
 
         title("@rules.title.planet");
 
+        var planets = new Seq<Planet>();
+        content.planets().each(p -> p.editorPreset, p -> planets.add(p));
+
+        for(var envFlag : Env.singles)
+            checkEnv(envFlag);
         main.table(Tex.button, t -> {
             t.margin(10f);
             var group = new ButtonGroup<>();
@@ -247,25 +253,32 @@ public class CustomRulesDialog extends BaseDialog{
 
             t.defaults().size(140f, 50f);
 
-            //TODO dynamic selection of planets
-            for(Planet planet : new Planet[]{Planets.serpulo, Planets.erekir}){
+            for(Planet planet : planets){
                 t.button(planet.localizedName, style, () -> {
                     rules.env = planet.defaultEnv;
                     rules.attributes.clear();
                     rules.attributes.add(planet.defaultAttributes);
+                }).group(group).checked(b -> rules.env == planet.defaultEnv);
+            }
+        }).left().fill(false).expand(false, false).row();
+
+        main.button("@banneditems", () -> showBanned("@banneditems", ContentType.item, rules.hiddenBuildItems, (Item item) -> true)).left().width(300f).row();
+        main.table(Tex.button, t -> {
+            t.margin(10f);
+            var group = new ButtonGroup<>();
+            var style = Styles.flatTogglet;
+
+            t.defaults().size(140f, 50f);
+
+            for(Planet planet : planets){
+                t.button(planet.localizedName, style, () -> {
                     rules.hiddenBuildItems.clear();
                     rules.hiddenBuildItems.addAll(planet.hiddenItems);
-                }).group(group).checked(b -> rules.env == planet.defaultEnv);
+                }).group(group);
             }
 
             t.button("@rules.anyenv", style, () -> {
-                if(!rules.infiniteResources){
-                    //unlocalized for now
-                    ui.showInfo("The 'any' environment can only be used in sandbox mode.");
-                }else{
-                    rules.env = Vars.defaultEnv;
-                    rules.hiddenBuildItems.clear();
-                }
+                rules.hiddenBuildItems.clear();
             }).group(group).checked(b -> rules.hiddenBuildItems.size == 0);
         }).left().fill(false).expand(false, false).row();
 
@@ -373,6 +386,15 @@ public class CustomRulesDialog extends BaseDialog{
     void check(String text, Boolc cons, Boolp prov, Boolp condition){
         main.check(text, cons).checked(prov.get()).update(a -> a.setDisabled(!condition.get())).padRight(100f).get().left();
         main.row();
+    }
+
+    void checkEnv(int env){
+        check(Env.localize(env), (boolean b) -> {
+            if(b)
+                rules.env |= env;
+            else
+                rules.env &= ~env;
+        }, () -> ((rules.env & env) != 0));
     }
 
     void title(String text){

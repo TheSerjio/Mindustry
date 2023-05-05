@@ -41,6 +41,7 @@ public class Planets{
                 Color.valueOf("ffe371"),
                 Color.valueOf("f4ee8e")
             );
+            editorPreset = false;
         }};
 
         erekir = new Planet("erekir", sun, 1f, 2){{
@@ -95,6 +96,7 @@ public class Planets{
             gen.iceChance = 0f;
             gen.berylChance = 0.1f;
         });
+        gier.editorPreset = true;
 
         notva = makeAsteroid("notva", sun, Blocks.ferricStoneWall, Blocks.beryllicStoneWall, 0.55f, 9, 1.3f, gen -> {
             gen.berylChance = 0.8f;
@@ -172,6 +174,7 @@ public class Planets{
             clipRadius = 2f;
             defaultEnv = Env.space;
             icon = "commandRally";
+            editorPreset = false;
             generator = new AsteroidGenerator();
             cgen.get((AsteroidGenerator)generator);
 
