@@ -101,9 +101,7 @@ public class Battery extends PowerDistributor{
 
         @Override
         public BlockStatus status(){
-            if(Mathf.equal(power.status, 0f, 0.001f)) return BlockStatus.noInput;
-            if(Mathf.equal(power.status, 1f, 0.001f)) return BlockStatus.active;
-            return BlockStatus.noOutput;
+            return ((mindustry.Vars.state.tick / 30f) % 1f) < power.status ? BlockStatus.active : BlockStatus.noInput;
         }
     }
 }

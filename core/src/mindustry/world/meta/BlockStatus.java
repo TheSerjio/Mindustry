@@ -4,10 +4,11 @@ import arc.graphics.*;
 import mindustry.graphics.*;
 
 public enum BlockStatus{
-    active(Color.valueOf("5ce677")),
-    noOutput(Color.orange),
-    noInput(Pal.remove),
-    logicDisable(Color.valueOf("8a73c6"));
+    active(Color.valueOf("00ff00")),
+    lowActive(Color.valueOf("00ffff")),
+    noOutput(Color.valueOf("ffff00")),
+    noInput(Color.valueOf("ff0000")),
+    logicDisable(Color.valueOf("0000ff"));
 
     public final Color color;
 

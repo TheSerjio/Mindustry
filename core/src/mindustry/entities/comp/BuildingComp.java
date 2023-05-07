@@ -580,7 +580,10 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
             return BlockStatus.noInput;
         }
 
-        return ((state.tick / 30f) % 1f) < efficiency ? BlockStatus.active : BlockStatus.noInput;
+        if(efficiency >= 1)
+            return BlockStatus.active;
+
+        return ((state.tick / 30f) % 1f) < efficiency ? BlockStatus.active : BlockStatus.lowActive;
     }
 
     /** Call when nothing is happening to the entity. This increments the internal sleep timer. */
@@ -1143,18 +1146,16 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     }
 
     public void drawStatus(){
-        if(block.enableDrawStatus && block.consumers.length > 0){
-            float multiplier = block.size > 1 ? 1 : 0.64f;
-            float brcx = x + (block.size * tilesize / 2f) - (tilesize * multiplier / 2f);
-            float brcy = y - (block.size * tilesize / 2f) + (tilesize * multiplier / 2f);
+        float multiplier = block.size > 1 ? 1 : 0.5f;
+        float brcx = x + (block.size * tilesize / 2f) - (tilesize * multiplier / 2f);
+        float brcy = y - (block.size * tilesize / 2f) + (tilesize * multiplier / 2f);
 
-            Draw.z(Layer.power + 1);
-            Draw.color(Pal.gray);
-            Fill.square(brcx, brcy, 2.5f * multiplier, 45);
-            Draw.color(status().color);
-            Fill.square(brcx, brcy, 1.5f * multiplier, 45);
-            Draw.color();
-        }
+        Draw.z(Layer.power + 1);
+        Draw.color(Pal.gray);
+        Fill.square(brcx, brcy, 2.5f * multiplier, 45);
+        Draw.color(status().color);
+        Fill.square(brcx, brcy, 1.5f * multiplier, 45);
+        Draw.color();
     }
 
     public void drawCracks(){

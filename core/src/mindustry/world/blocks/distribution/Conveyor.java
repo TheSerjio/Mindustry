@@ -443,5 +443,16 @@ public class Conveyor extends Block implements Autotiler{
         public Building next(){
             return nextc;
         }
+
+        @Override
+        public BlockStatus status(){
+            if(!enabled)
+                return BlockStatus.logicDisable;
+            if(clogHeat > 0.5f)
+                return BlockStatus.noOutput;
+            if(len == 0)
+                return BlockStatus.noInput;
+            return BlockStatus.active;
+        }
     }
 }

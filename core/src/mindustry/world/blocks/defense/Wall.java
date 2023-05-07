@@ -129,5 +129,10 @@ public class Wall extends Block{
 
             return true;
         }
+
+        @Override
+        public BlockStatus status(){
+            return ((mindustry.Vars.state.tick / 30f) % 1f) < (health / Wall.this.health) ? BlockStatus.active : BlockStatus.noInput;
+        }
     }
 }

@@ -448,9 +448,8 @@ public class BlockRenderer{
                             build.drawTeam();
                             Draw.z(Layer.block);
                         }
-                    }else if(renderer.drawStatus && block.hasConsumers){
-                        build.drawStatus();
                     }
+                    build.drawStatus();
                 }
                 Draw.reset();
             }else if(!visible){

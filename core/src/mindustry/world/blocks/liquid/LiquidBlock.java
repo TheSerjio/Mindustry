@@ -80,5 +80,17 @@ public class LiquidBlock extends Block{
 
             Draw.rect(topRegion, x, y, rotation);
         }
+
+        @Override
+        public BlockStatus status(){
+            if(!enabled)
+                return BlockStatus.logicDisable;
+            var c = liquids.currentAmount();
+            if(c < 0.01f)
+                return BlockStatus.noInput;
+            else if(c > liquidCapacity - 0.1f)
+                return BlockStatus.noOutput;
+            return BlockStatus.active;
+        }
     }
 }
