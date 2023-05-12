@@ -88,7 +88,10 @@ abstract class UnitComp implements Healthc, Physicsc, Hitboxc, Statusc, Teamc, I
     }
 
     public void rotateMove(Vec2 vec){
-        moveAt(Tmp.v2.trns(rotation, vec.len()));
+        if(!type.rotateMoveFirst || Tmp.v2.trns(rotation, 1).dot(vec) >= -0.1f)
+            moveAt(Tmp.v2.trns(rotation, vec.len()));
+        else
+            moveAt(Tmp.v2.trns(rotation, -vec.len() * type.strafePenalty));
 
         if(!vec.isZero()){
             rotation = Angles.moveToward(rotation, vec.angle(), type.rotateSpeed * Time.delta);
