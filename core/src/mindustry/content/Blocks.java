@@ -3413,15 +3413,18 @@ public class Blocks{
                     lightningLength = 10;
                 }}
             );
-
-            shoot = new ShootAlternate(){{
+            
+            shoot = new ShootBarrel(){{
+                barrels = new float[]{
+                    -4, -1.25f, 0,
+                    0, 0, 0,
+                    4, -1.25f, 0
+                };
                 shots = 4;
-                barrels = 3;
-                spread = 3.5f;
                 shotDelay = 5f;
             }};
 
-            shootY = 7f;
+            shootY = 4.5f;
             reload = 30f;
             inaccuracy = 10f;
             range = 240f;
@@ -4660,7 +4663,7 @@ public class Blocks{
 
             recoil = 0.5f;
 
-            fogRadiusMultiuplier = 0.4f;
+            fogRadiusMultiplier = 0.4f;
             coolantMultiplier = 6f;
             shootSound = Sounds.missileLaunch;
 
